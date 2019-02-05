@@ -1,7 +1,10 @@
 <template>
 	<div class="VideoItem_wrapper">
 		<div class="card" style="width: 18rem;">
+             <router-link 
+        :to="{name: 'youtube-video', params: {id: video.id.videoId} }" >
   <img class="card-img-top" v-bind:src="videoImage" v-bind:alt="videoTitle">
+</router-link>
   <div class="card-body">
     <h5 class="card-title">{{videoTitle}}</h5>
     <p class="card-text">{{videoDiscreption}}</p>
@@ -34,6 +37,18 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
-
+<style>
+.card {
+  .card-title a {
+    color: #212529;
+    &:hover {
+      text-decoration: none;
+      border-bottom: 2px solid #212529;
+    }
+  }
+  margin: 0px 5px 5px 0px;
+  .card-img-top {
+    max-height: 210px;
+  }
+}
 </style>

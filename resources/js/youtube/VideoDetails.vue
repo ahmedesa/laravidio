@@ -1,6 +1,5 @@
 <template>
   <div class="VideoDetails__wrapper">
-    <!--Main wrapper-->
     <div class="row" v-if="video">
       <div class="col-sm-8">
         <h2>{{video.snippet.title}}</h2>
@@ -10,21 +9,27 @@
           <iframe v-bind:src="url"></iframe>
         </div>
 
-        <p>{{video.snippet.description}}</p>
 
-      </div>
-
+        <p>{{video.snippet.description}}</p>      </div>
     </div>
-
-
+    <div class="row">
+      <div class="col-sm-8 pt-4">
+        <comment-wrapper></comment-wrapper>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+  import CommentWrapper from './comments/CommentWrapper.vue';
+  import GetVideo       from './GetVideo.js' ;
+
 export default {
 
   name: 'VideoDetails',
-
+  components :{
+    CommentWrapper 
+  },
   data () {
     return {
     	videoId : null ,
@@ -33,16 +38,16 @@ export default {
     }
   },
   created(){
-  	if (this.$route.params.video === undefined) {
-  		this.$router.push({name :'youtube-dash'});
-  	}
   	this.videoId = this.$route.params.id ;
-  	this.video   = this.$route.params.video ;
   	this.url = `https://www.youtube.com/embed/${this.videoId}`;
+    GetVideo({
+      apiKey : 'AIzaSyCpNLDOeE_Kj1_gAzUbxuleWNXpkgVYjfM',
+      videoId: this.videoId
+     },response => {
+      this.video = response[0];
+       });
+    },
 
-
-
-}
 }
 </script>
 
